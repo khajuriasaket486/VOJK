@@ -8,7 +8,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/main2.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     {% if title %}
         <title>Voice Of J&K| {{ title }}</title>
@@ -46,12 +47,12 @@
         </nav>
     </header>
 
-    <main role="main" class="container">
+    <main role="main" class="container mb-5">
         <div class="row">
 
 
 
-            <div class="col-md-8">
+            <div class="col-md-11 ml-5" >
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert-{{ message.tags }}">
@@ -61,6 +62,10 @@
             {% endif %}
                 {% block content %}{% endblock %}
             </div>
+
+
+
+
 
 
 
@@ -81,6 +86,29 @@
 {#            </div>#}
         </div>
     </main>
+
+    <footer id="main-footer" class="b-clr py-1 text-muted text-right text-white fixed-bottom">
+        <div class="col-md-7">
+            <span class="year"></span> Copyright &copy; <a href="{% url 'blog-home' %}"> Voice Of J&K</a>
+
+            <div class="social text-right mr-5">
+                  <a href="#">
+                      <i class="fab fa-twitter"></i>
+                  </a>
+
+                  <a href="#">
+                      <i class="fab fa-facebook"></i>
+                  </a>
+                  <a href="#">
+                      <i class="fab fa-linkedin"></i>
+                  </a>
+                  <a href="#">
+                      <i class="fab fa-instagram"></i>
+                  </a>
+              </div>
+         </div>
+
+    </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

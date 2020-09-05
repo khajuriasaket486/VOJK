@@ -1,10 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect,HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from blog.models import Post
+from django.urls import reverse
+
+from blog.models import Post,BlogComment
+from django.contrib import messages
+from blog.blog_form import BlogCommentForm
 from django.views.generic import (
     ListView,
-    DetailView,
+    # DetailView,
     CreateView,
     UpdateView,
     DeleteView)
@@ -31,18 +35,20 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date')
 
 
-class PostDetailView(DetailView):
-    model = Post
-    template_name = 'blog/post_detail.html'
+# class PostDetailView(DetailView):
+#     model = Post
+#     template_name = 'blog/post_detail.html'
+
+
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
+    success_url = '/'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -59,6 +65,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         else:
             return False
 
+
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = '/'
@@ -68,6 +76,43 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         else:
             return False
+
+
+def postDetail(request, pk):
+    if request.method == 'GET':
+        object_items = Post.objects.filter(id=pk)
+        comments = BlogComment.objects.filter(post_id=pk)
+        return render(request, 'blog/post_detail.html', {'object_items': object_items, 'comments': comments})
+    if request.method == 'POST':
+        comment = request.POST['comment']
+        post_id = pk
+        user_id = request.user.id
+        save_comment = BlogComment(comment=comment, post_id=post_id, user_id=user_id)
+        save_comment.save()
+        return HttpResponseRedirect(reverse('post-detail', kwargs={'pk':pk}))
+
+
+def writeComment(request, pk):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            blog_comment_form = BlogCommentForm()
+            return render(request, 'blog/comment_form.html', {'blog_comment_form':blog_comment_form, 'pk':pk})
+    else:
+        messages.error(request, {'error_message': 'Please login to comment'})
+        return redirect('login')
+
+# def postComment(request, pk):
+#     comment = request.GET['comment']
+#     user = request.user
+#     post_id = pk
+#     print(comment, user, post_id)
+#     # blog_comment = BlogComment(comment=comment, user=user, post_id=post_id)
+#     # blog_comment.save()
+#     return redirect('post-detail')
+
+
+
+
 
 def about(request):
     return render(request,'blog/about.html', {'title':'vojk'})

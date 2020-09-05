@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossOrigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main2.css' %}">
+    <link rel="icon" href="{% static 'favicons/favicon.ico' %}" type="image/gif" sizes="16x16">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     {% if title %}
@@ -21,7 +22,7 @@
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
-                    <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Voice of J&K</a>
+                    <a class="navbar-brand mr-4" href="{% url 'blog-home' %}"> <img src="{% static 'favicons/favicon.ico' %}" height="21" width="18"> Voice of J&K</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>

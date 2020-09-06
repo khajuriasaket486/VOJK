@@ -5,7 +5,7 @@
         <img width="105" height="105" class="rounded-circle article-image" src="{{ object.author.profile.image.url }}">
         <div class="media-body">
             <div class="article-metadata">
-                <a class="mr-2 ml-2" href="{% url 'user-posts' object.author.username %}">{{ object.author.username }}</a>
+                <a class="mr-2 ml-2 text-dark" href="{% url 'user-posts' object.author.username %}">{{ object.author.username }}</a>
                 <small class="text-muted">{{ object.date }}</small>
                 <div>
                     <a class="btn btn-info btn-sm mt-1 mb-1 ml-2" href="{% url 'write-comment' object.id %}">Comment</a>
@@ -17,17 +17,27 @@
 
 
             </div>
-                <h2 class="article-title ml-2">{{ object.title }}</h2>
+                <h3 class="article-title ml-2">{{ object.title }}</h3>
                 <p class="article-content ml-2">{{ object.content }}</p>
             </div>
+    {% endfor %}
 
     </article>
+<div>
+    <h5 class="mb-3 article-title "> Comments: </h5>
+            <hr>
 
-    <div class="mb-3"> comments </div>
-    {% endfor %}
         {% if comments %}
             {% for c in comments %}
-                <div>{{ c.comment }}</div>
+                <div class="article-title mb-3 ml-2 mx-auto">
+                    <b><img width="40" height="40" class="rounded-circle article-image" src="{{ c.user.profile.image.url }}">
+                        <a class="mr-2 ml-2 text-dark" href="{% url 'user-posts' c.user.username %}">{{ c.user.username }}</a>
+                    </b>:
+                        <small class="text-muted ">{{ c.timestamp }}</small>
+                        <h6 class="ml-5 d-flex w-50 text-justify">{{ c.comment }}</h6>
+                </div><hr>
+
             {% endfor %}
         {% endif %}
+    </div>
 {% endblock content %}

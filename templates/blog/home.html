@@ -5,10 +5,10 @@
             <img width="105" height="105" class="rounded-circle article-image" src="{{ post.author.profile.image.url }}">
             <div class="media-body">
                 <div class="article-metadata">
-                    <a class="mr-2 ml-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                    <a class="mr-2 ml-2 text-dark" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
                     <small class="text-muted">{{ post.date }}</small>
                 </div>
-                <h4><a id="{{ post.id }}" class="article-title ml-2" href="{% url 'post-detail' pk=post.id%}">{{ post.title }}</a></h4>
+                <h5><a id="{{ post.id }}" class="article-title ml-2 text-dark" href="{% url 'post-detail' pk=post.id%}">{{ post.title }}</a></h5>
                 <p class="article-content ml-2">{{ post.content }}</p>
             </div>
         </article>

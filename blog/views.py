@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect,HttpResponse, H
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
-
+from users.models import Profile
 from blog.models import Post,BlogComment
 from django.contrib import messages
 from blog.blog_form import BlogCommentForm
@@ -86,8 +86,8 @@ def postDetail(request, pk):
     if request.method == 'POST':
         comment = request.POST['comment']
         post_id = pk
-        user_id = request.user.id
-        save_comment = BlogComment(comment=comment, post_id=post_id, user_id=user_id)
+        user_id = request.user
+        save_comment = BlogComment(comment=comment, post_id=post_id, user_id=user_id.id)
         save_comment.save()
         return HttpResponseRedirect(reverse('post-detail', kwargs={'pk':pk}))
 
@@ -100,19 +100,6 @@ def writeComment(request, pk):
     else:
         messages.error(request, {'error_message': 'Please login to comment'})
         return redirect('login')
-
-# def postComment(request, pk):
-#     comment = request.GET['comment']
-#     user = request.user
-#     post_id = pk
-#     print(comment, user, post_id)
-#     # blog_comment = BlogComment(comment=comment, user=user, post_id=post_id)
-#     # blog_comment.save()
-#     return redirect('post-detail')
-
-
-
-
 
 def about(request):
     return render(request,'blog/about.html', {'title':'vojk'})
